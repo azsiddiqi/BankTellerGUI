@@ -8,7 +8,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 
-public class HelloController {
+public class BankTellerController {
 
     @FXML
     private ToggleGroup accType;
