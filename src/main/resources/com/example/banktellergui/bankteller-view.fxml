@@ -22,7 +22,7 @@
     <top>
         <TabPane prefHeight="682.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
             <tabs>
-                <Tab text="Open/Close">
+                <Tab text="Open">
                     <content>
                         <AnchorPane>
                             <children>
@@ -96,12 +96,7 @@
                                         </RadioButton>
                                         <Button mnemonicParsing="false" onAction="#openAccount" text="Open" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                             <GridPane.margin>
-                                                <Insets bottom="-40.0" left="50.0" />
-                                            </GridPane.margin>
-                                        </Button>
-                                        <Button mnemonicParsing="false" onAction="#closeAccount" text="Close" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                                            <GridPane.margin>
-                                                <Insets bottom="-40.0" left="150.0" />
+                                                <Insets bottom="-40.0" left="100.0" />
                                             </GridPane.margin>
                                         </Button>
                                         <DatePicker fx:id="dateOfBirth" prefHeight="25.0" prefWidth="247.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
@@ -141,7 +136,7 @@
                         </AnchorPane>
                     </content>
                 </Tab>
-                <Tab text="Deposit/Withdraw">
+                <Tab text="Close/Deposit/Withdraw">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
@@ -159,12 +154,12 @@
                                         <RowConstraints maxHeight="149.0" minHeight="10.0" prefHeight="52.0" vgrow="SOMETIMES" />
                                     </rowConstraints>
                                     <children>
-                                        <TextField prefWidth="96.0" GridPane.columnIndex="1">
+                                        <TextField fx:id="firstName2" prefWidth="96.0" GridPane.columnIndex="1">
                                             <GridPane.margin>
                                                 <Insets />
                                             </GridPane.margin>
                                         </TextField>
-                                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                        <TextField fx:id="lastName2" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                         <Label text="First Name:">
                                             <GridPane.margin>
                                                 <Insets left="70.0" />
@@ -189,30 +184,33 @@
                                             <GridPane.margin>
                                                 <Insets bottom="30.0" />
                                             </GridPane.margin>
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="accountType2" />
+                                 </toggleGroup>
                                         </RadioButton>
-                                        <RadioButton mnemonicParsing="false" prefHeight="17.0" prefWidth="128.0" text="College Checking" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                        <RadioButton mnemonicParsing="false" prefHeight="17.0" prefWidth="128.0" text="College Checking" toggleGroup="$accountType2" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                             <GridPane.margin>
                                                 <Insets bottom="30.0" left="110.0" />
                                             </GridPane.margin>
                                         </RadioButton>
-                                        <RadioButton mnemonicParsing="false" text="Savings" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                        <RadioButton mnemonicParsing="false" text="Savings" toggleGroup="$accountType2" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                             <GridPane.margin>
                                                 <Insets bottom="-30.0" />
                                             </GridPane.margin>
                                         </RadioButton>
-                                        <RadioButton mnemonicParsing="false" text="Money Market" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                        <RadioButton mnemonicParsing="false" text="Money Market" toggleGroup="$accountType2" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                             <GridPane.margin>
                                                 <Insets bottom="-30.0" left="110.0" />
                                             </GridPane.margin>
                                         </RadioButton>
-                                        <Button mnemonicParsing="false" onAction="#depositIntoAccount" text="Deposit" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                        <Button mnemonicParsing="false" onAction="#accountDepositOrWithdraw" text="Deposit" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                             <GridPane.margin>
-                                                <Insets bottom="-40.0" left="40.0" />
+                                                <Insets bottom="-40.0" left="90.0" />
                                             </GridPane.margin>
                                         </Button>
-                                        <Button mnemonicParsing="false" onAction="#withdrawFromAccount" text="Withdraw" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                        <Button mnemonicParsing="false" onAction="#accountDepositOrWithdraw" text="Withdraw" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                             <GridPane.margin>
-                                                <Insets bottom="-40.0" left="150.0" />
+                                                <Insets bottom="-40.0" left="170.0" />
                                             </GridPane.margin>
                                         </Button>
                                         <Label layoutX="80.0" layoutY="128.0" text="Amount" GridPane.rowIndex="4">
@@ -220,16 +218,21 @@
                                                 <Insets bottom="50.0" left="70.0" />
                                             </GridPane.margin>
                                         </Label>
-                                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                        <TextField fx:id="balanceAmount2" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                             <GridPane.margin>
                                                 <Insets bottom="50.0" />
                                             </GridPane.margin>
                                         </TextField>
-                                        <DatePicker prefHeight="25.0" prefWidth="247.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                        <DatePicker fx:id="dateOfBirth2" prefHeight="25.0" prefWidth="247.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Button mnemonicParsing="false" onAction="#closeAccount" text="Close" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                 <GridPane.margin>
+                                    <Insets bottom="-40.0" left="10.0" />
+                                 </GridPane.margin>
+                              </Button>
                                     </children>
                                 </GridPane>
                         <HBox layoutX="-80.0" layoutY="390.0" prefHeight="100.0" prefWidth="200.0" />
-                                  <TextArea layoutX="14.0" layoutY="383.0" prefHeight="270.0" prefWidth="572.0" />
+                                  <TextArea fx:id="textAreaDisplay2" layoutX="14.0" layoutY="383.0" prefHeight="270.0" prefWidth="572.0" />
                             </children></AnchorPane>
                     </content>
                 </Tab>

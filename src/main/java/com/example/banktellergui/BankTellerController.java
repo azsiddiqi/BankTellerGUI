@@ -2,6 +2,7 @@ package com.example.banktellergui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
@@ -20,7 +21,13 @@ public class BankTellerController {
     private ToggleGroup accountType;
 
     @FXML
+    private ToggleGroup accountType2;
+
+    @FXML
     private TextField balanceAmount;
+
+    @FXML
+    private TextField balanceAmount2;
 
     @FXML
     private ToggleGroup campusCode;
@@ -29,16 +36,28 @@ public class BankTellerController {
     private DatePicker dateOfBirth;
 
     @FXML
+    private DatePicker dateOfBirth2;
+
+    @FXML
     private TextField firstName;
 
     @FXML
+    private TextField firstName2;
+
+    @FXML
     private TextField lastName;
+
+    @FXML
+    private TextField lastName2;
 
     @FXML
     private RadioButton loyalCustomer;
 
     @FXML
     private TextArea textAreaDisplay;
+
+    @FXML
+    private TextArea textAreaDisplay2;
 
     @FXML
     private TextArea textAreaDisplay3;
@@ -50,6 +69,25 @@ public class BankTellerController {
             }
         }
         return AccountDatabase.NOT_FOUND;
+    }
+
+    private boolean depositAndWithdrawBalanceChecker(ActionEvent event) {
+        double balance = 0;
+        try {
+            balance = Double.parseDouble(balanceAmount2.getText());
+        } catch (NumberFormatException invalidBalance) {
+            textAreaDisplay2.appendText("Not a valid amount.\n");
+            return false;
+        }
+        String depositOrWithdraw = ((Button)event.getSource()).getText();
+        if (balance <= 0 && depositOrWithdraw.equals("Deposit")) {
+            textAreaDisplay2.appendText("Deposit - amount cannot be 0 or negative.\n");
+            return false;
+        } else if (balance <= 0 && depositOrWithdraw.equals("Withdraw")) {
+            textAreaDisplay2.appendText("Withdraw - amount cannot be 0 or negative.\n");
+            return false;
+        }
+        return true;
     }
 
     private boolean sameAccountsChecker(Account account) {
@@ -105,13 +143,70 @@ public class BankTellerController {
     }
 
     @FXML
-    void closeAccount(ActionEvent event) {
-
+    void accountDepositOrWithdraw(ActionEvent event) {
+        if (!(depositAndWithdrawBalanceChecker(event))) {
+            return;
+        }
+        Profile holder = new Profile(firstName2.getText(), lastName2.getText(), new Date(dateOfBirth2.getValue().toString()));
+        Account changeBalance = null;
+        RadioButton accType = (RadioButton) accountType2.getSelectedToggle();
+        if (accType.getText().equals("Checking")) {
+            changeBalance = new Checking(holder, Double.parseDouble(balanceAmount2.getText()));
+        } else if (accType.getText().equals("College Checking")) {
+            changeBalance = new CollegeChecking(holder, Double.parseDouble(balanceAmount2.getText()), 0);
+        } else if (accType.getText().equals("Savings")) {
+            changeBalance = new Savings(holder, Double.parseDouble(balanceAmount2.getText()), 0);
+        } else if (accType.getText().equals("Money Market")) {
+            changeBalance = new MoneyMarket(holder, Double.parseDouble(balanceAmount2.getText()));
+        }
+        int findMatchingAccountIndex = accountFinder(changeBalance);
+        if (findMatchingAccountIndex == AccountDatabase.NOT_FOUND && !(accType.getText().equals("Money Market"))) {
+            textAreaDisplay2.appendText(changeBalance.holder + " " + changeBalance.getType() + " is not in the database.\n");
+            return;
+        } else if (findMatchingAccountIndex == AccountDatabase.NOT_FOUND && (accType.getText().equals("Money Market"))) {
+            textAreaDisplay2.appendText(changeBalance.holder + " Money Market is not in the database.\n");
+            return;
+        }
+        String depositOrWithdraw = ((Button)event.getSource()).getText();
+        if (depositOrWithdraw.equals("Deposit")) {
+            allAccts.deposit(changeBalance);
+            textAreaDisplay2.appendText("Deposit - balance updated.\n");
+        } else if (depositOrWithdraw.equals("Withdraw")) {
+            if (!(allAccts.withdraw(changeBalance))) {
+                textAreaDisplay2.appendText("Withdraw - insufficient fund.\n");
+                return;
+            }
+            textAreaDisplay2.appendText("Withdraw - balance updated.\n");
+        }
     }
 
     @FXML
-    void depositIntoAccount(ActionEvent event) {
-
+    void closeAccount(ActionEvent event) {
+        if (firstName2.getText().isEmpty() || lastName2.getText().isEmpty() || dateOfBirth2.getValue() == null ||
+                accountType2.getSelectedToggle() == null) {
+            textAreaDisplay2.appendText("Missing data for closing an account.\n");
+            return;
+        }
+        Profile holder = new Profile(firstName2.getText(), lastName2.getText(), new Date(dateOfBirth2.getValue().toString()));
+        Account closeAccount = null;
+        RadioButton accType = (RadioButton) accountType2.getSelectedToggle();
+        if (accType.getText().equals("Checking")) {
+            closeAccount = new Checking(holder, 0);
+        } else if (accType.getText().equals("College Checking")) {
+            closeAccount = new CollegeChecking(holder, 0, 0);
+        } else if (accType.getText().equals("Savings")) {
+            closeAccount = new Savings(holder, 0, 0);
+        } else if (accType.getText().equals("Money Market")) {
+            closeAccount = new MoneyMarket(holder, 0);
+        }
+        if (accountFinder(closeAccount) == AccountDatabase.NOT_FOUND) {
+            textAreaDisplay2.appendText("Cannot close an account that is not in the database.\n");
+        } else if (allAccts.getAccounts()[accountFinder(closeAccount)].closed == true) {
+            textAreaDisplay2.appendText("Account is closed already.\n");
+        } else {
+            allAccts.close(closeAccount);
+            textAreaDisplay2.appendText("Account closed.\n");
+        }
     }
 
     @FXML
@@ -195,11 +290,6 @@ public class BankTellerController {
             textAreaDisplay3.appendText("\n");
         }
         textAreaDisplay3.appendText("*end of list.\n");
-    }
-
-    @FXML
-    void withdrawFromAccount(ActionEvent event) {
-
     }
 
 }
