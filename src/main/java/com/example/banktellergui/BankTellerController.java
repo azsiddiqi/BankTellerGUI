@@ -11,10 +11,6 @@ import javafx.scene.control.ToggleGroup;
 
 public class BankTellerController {
 
-    public static final int VALID_NUMBER_OF_INFORMATION_FOR_OPENING_CHECKING_OR_MONEY_MARKET = 6;
-    public static final int VALID_NUMBER_OF_INFORMATION_FOR_OPENING_COLLEGE_CHECKING_OR_SAVINGS = 7;
-    public static final int VALID_NUMBER_OF_INFORMATION_FOR_CLOSING_ACCOUNT = 5;
-
     private static AccountDatabase allAccts = new AccountDatabase();
 
     @FXML
