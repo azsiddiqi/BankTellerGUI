@@ -13,39 +13,31 @@ public class BankTellerController {
     private static AccountDatabase allAccts = new AccountDatabase();
 
     @FXML
-    private ToggleGroup accType;
+    private ToggleGroup accountType;
 
     @FXML
-    private RadioButton accountType;
+    private TextField balanceAmount;
 
     @FXML
-    private TextField balance;
+    private ToggleGroup campusCode;
 
     @FXML
-    private ToggleGroup campCode;
+    private DatePicker dateOfBirth;
 
     @FXML
-    private RadioButton campusCode;
+    private TextField firstName;
 
     @FXML
-    private TextArea displayResult;
-
-    @FXML
-    private DatePicker dob;
-
-    @FXML
-    private TextField fname;
-
-    @FXML
-    private TextField lname;
+    private TextField lastName;
 
     @FXML
     private RadioButton loyalCustomer;
 
     @FXML
-    void calculateFeesAndInterests(ActionEvent event) {
+    private TextArea textAreaDisplay;
 
-    }
+    @FXML
+    private TextArea textAreaDisplay3;
 
     @FXML
     void closeAccount(ActionEvent event) {
@@ -59,34 +51,68 @@ public class BankTellerController {
 
     @FXML
     void openAccount(ActionEvent event) {
-        Profile holder = new Profile(fname.getText(), lname.getText(), new Date(dob.getValue().toString()));
+        Profile holder = new Profile(firstName.getText(), lastName.getText(), new Date(dateOfBirth.getValue().toString()));
         Account addAccount = null;
-        if (accountType.getText().equals("Checking")) {
-            addAccount = new Checking(holder, Double.parseDouble(balance.getText()));
-        } else if (accountType.getText().equals("College Checking")) {
-            addAccount = new CollegeChecking(holder, Double.parseDouble(balance.getText()), Integer.parseInt(campusCode.getText()));
-        } else if (accountType.getText().equals("Savings")) {
-            addAccount = new Savings(holder, Double.parseDouble(balance.getText()), Integer.parseInt(loyalCustomer.getText()));
-        } else if (accountType.getText().equals("Money Market")) {
-            addAccount = new MoneyMarket(holder, Double.parseDouble(balance.getText()));
+        RadioButton accType = (RadioButton) accountType.getSelectedToggle();
+        if (accType.getText().equals("Checking")) {
+            addAccount = new Checking(holder, Double.parseDouble(balanceAmount.getText()));
+        } else if (accType.getText().equals("College Checking")) {
+            RadioButton campCode = (RadioButton) campusCode.getSelectedToggle();
+            addAccount = new CollegeChecking(holder, Double.parseDouble(balanceAmount.getText()), Integer.parseInt(campCode.getId()));
+        } else if (accType.getText().equals("Savings")) {
+            if (loyalCustomer.isSelected()) {
+                addAccount = new Savings(holder, Double.parseDouble(balanceAmount.getText()), 1);
+            } else {
+                addAccount = new Savings(holder, Double.parseDouble(balanceAmount.getText()), 0);
+            }
+        } else if (accType.getText().equals("Money Market")) {
+            addAccount = new MoneyMarket(holder, Double.parseDouble(balanceAmount.getText()));
         }
         allAccts.open(addAccount);
-        displayResult.appendText("Account opened.\n");
+        textAreaDisplay.appendText("Account opened.\n");
     }
 
     @FXML
     void printAccounts(ActionEvent event) {
-
+        textAreaDisplay3.appendText("\n*list of accounts in the database*\n");
+        for (int i = 0; i < allAccts.getNumAcct(); i++) {
+            textAreaDisplay3.appendText(allAccts.print(allAccts.getAccounts()[i]));
+            textAreaDisplay3.appendText("\n");
+        }
+        textAreaDisplay3.appendText("*end of list*\n");
     }
 
     @FXML
     void printAccountsByType(ActionEvent event) {
+        allAccts.printByAccountType();
+        textAreaDisplay3.appendText("\n*list of accounts by account type.\n");
+        for (int i = 0; i < allAccts.getNumAcct(); i++) {
+            textAreaDisplay3.appendText(allAccts.print(allAccts.getAccounts()[i]));
+            textAreaDisplay3.appendText("\n");
+        }
+        textAreaDisplay3.appendText("*end of list.\n");
 
     }
 
     @FXML
     void printAccountsWithFeesAndInterests(ActionEvent event) {
+        textAreaDisplay3.appendText("\n*list of accounts with fee and monthly interest\n");
+        for (int i = 0; i < allAccts.getNumAcct(); i++) {
+            textAreaDisplay3.appendText(allAccts.printFeeAndInterest(allAccts.getAccounts()[i]));
+            textAreaDisplay3.appendText("\n");
+        }
+        textAreaDisplay3.appendText("*end of list.\n");
+    }
 
+    @FXML
+    void printAccountsWithUpdatedBalances(ActionEvent event) {
+        textAreaDisplay3.appendText("\n*list of accounts with updated balance\n");
+        for (int i = 0; i < allAccts.getNumAcct(); i++) {
+            allAccts.getAccounts()[i].updateBalance();
+            textAreaDisplay3.appendText(allAccts.print(allAccts.getAccounts()[i]));
+            textAreaDisplay3.appendText("\n");
+        }
+        textAreaDisplay3.appendText("*end of list.\n");
     }
 
     @FXML

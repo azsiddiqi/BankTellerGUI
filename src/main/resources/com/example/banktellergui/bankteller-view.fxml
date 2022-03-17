@@ -14,6 +14,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
@@ -39,12 +40,12 @@
                                         <RowConstraints maxHeight="177.0" minHeight="10.0" prefHeight="113.0" vgrow="SOMETIMES" />
                                     </rowConstraints>
                                     <children>
-                                        <TextField fx:id="fname" prefWidth="96.0" GridPane.columnIndex="1">
+                                        <TextField fx:id="firstName" prefWidth="96.0" GridPane.columnIndex="1">
                                             <GridPane.margin>
                                                 <Insets />
                                             </GridPane.margin>
                                         </TextField>
-                                        <TextField fx:id="lname" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                        <TextField fx:id="lastName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                         <Label text="First Name:">
                                             <GridPane.margin>
                                                 <Insets left="70.0" />
@@ -65,50 +66,32 @@
                                                 <Insets left="70.0" />
                                             </GridPane.margin>
                                         </Label>
-                                        <RadioButton fx:id="accountType" mnemonicParsing="false" selected="true" text="Checking" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                        <RadioButton mnemonicParsing="false" selected="true" text="Checking" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                             <GridPane.margin>
                                                 <Insets bottom="30.0" />
                                             </GridPane.margin>
                                  <toggleGroup>
-                                    <ToggleGroup fx:id="accType" />
+                                    <ToggleGroup fx:id="accountType" />
                                  </toggleGroup>
                                         </RadioButton>
-                                        <RadioButton fx:id="accountType" mnemonicParsing="false" prefHeight="17.0" prefWidth="128.0" text="College Checking" toggleGroup="$accType" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                        <RadioButton mnemonicParsing="false" prefHeight="17.0" prefWidth="128.0" text="College Checking" toggleGroup="$accountType" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                             <GridPane.margin>
                                                 <Insets bottom="30.0" left="110.0" />
                                             </GridPane.margin>
                                         </RadioButton>
-                                        <RadioButton fx:id="accountType" mnemonicParsing="false" text="Savings" toggleGroup="$accType" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                        <RadioButton mnemonicParsing="false" text="Savings" toggleGroup="$accountType" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                             <GridPane.margin>
                                                 <Insets bottom="-30.0" />
                                             </GridPane.margin>
                                         </RadioButton>
-                                        <RadioButton fx:id="accountType" mnemonicParsing="false" text="Money Market" toggleGroup="$accType" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                        <RadioButton mnemonicParsing="false" text="Money Market" toggleGroup="$accountType" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                             <GridPane.margin>
                                                 <Insets bottom="-30.0" left="110.0" />
                                             </GridPane.margin>
                                         </RadioButton>
-                                        <RadioButton fx:id="campusCode" mnemonicParsing="false" text="New Brunswick" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                                            <GridPane.margin>
-                                                <Insets bottom="-60.0" />
-                                            </GridPane.margin>
-                                 <toggleGroup>
-                                    <ToggleGroup fx:id="campCode" />
-                                 </toggleGroup>
-                                        </RadioButton>
-                                        <RadioButton fx:id="campusCode" mnemonicParsing="false" text="Newark" toggleGroup="$campCode" GridPane.columnIndex="2" GridPane.rowIndex="3">
-                                            <GridPane.margin>
-                                                <Insets bottom="50.0" />
-                                            </GridPane.margin>
-                                        </RadioButton>
-                                        <RadioButton fx:id="campusCode" mnemonicParsing="false" text="Camden" toggleGroup="$campCode" GridPane.columnIndex="2" GridPane.rowIndex="3">
-                                            <GridPane.margin>
-                                                <Insets />
-                                            </GridPane.margin>
-                                        </RadioButton>
                                         <RadioButton fx:id="loyalCustomer" mnemonicParsing="false" text="Loyal Customer" GridPane.columnIndex="2" GridPane.rowIndex="3">
                                             <GridPane.margin>
-                                                <Insets bottom="-50.0" />
+                                                <Insets bottom="-80.0" />
                                             </GridPane.margin>
                                         </RadioButton>
                                         <Button mnemonicParsing="false" onAction="#openAccount" text="Open" GridPane.columnIndex="1" GridPane.rowIndex="4">
@@ -121,8 +104,8 @@
                                                 <Insets bottom="-40.0" left="150.0" />
                                             </GridPane.margin>
                                         </Button>
-                                        <DatePicker fx:id="dob" prefHeight="25.0" prefWidth="247.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <TextField fx:id="balance" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                        <DatePicker fx:id="dateOfBirth" prefHeight="25.0" prefWidth="247.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <TextField fx:id="balanceAmount" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                  <GridPane.margin>
                                     <Insets bottom="60.0" />
                                  </GridPane.margin>
@@ -132,6 +115,24 @@
                                     <Insets bottom="60.0" left="90.0" />
                                  </GridPane.margin>
                               </Label>
+                              <RadioButton id="2" mnemonicParsing="false" text="Camden" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                 <GridPane.margin>
+                                    <Insets bottom="-30.0" />
+                                 </GridPane.margin>
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="campusCode" />
+                                 </toggleGroup>
+                              </RadioButton>
+                              <RadioButton id="1" mnemonicParsing="false" text="Newark" toggleGroup="$campusCode" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                 <GridPane.margin>
+                                    <Insets bottom="20.0" />
+                                 </GridPane.margin>
+                              </RadioButton>
+                              <RadioButton id="0" mnemonicParsing="false" text="New Brunswick" toggleGroup="$campusCode" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                 <GridPane.margin>
+                                    <Insets bottom="70.0" />
+                                 </GridPane.margin>
+                              </RadioButton>
                                     </children>
                                 </GridPane>
                                 <GridPane layoutX="43.0" layoutY="390.0" prefHeight="234.0" prefWidth="517.0">
@@ -142,7 +143,7 @@
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     </rowConstraints>
                                     <children>
-                                        <TextArea fx:id="displayResult" prefHeight="200.0" prefWidth="200.0" />
+                                        <TextArea fx:id="textAreaDisplay" prefHeight="200.0" prefWidth="200.0" />
                                     </children>
                                 </GridPane>
                             </children>
@@ -193,22 +194,22 @@
                                                 <Insets left="70.0" />
                                             </GridPane.margin>
                                         </Label>
-                                        <RadioButton fx:id="accountType" mnemonicParsing="false" selected="true" text="Checking" toggleGroup="$accType" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                        <RadioButton mnemonicParsing="false" text="Checking" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                             <GridPane.margin>
                                                 <Insets bottom="30.0" />
                                             </GridPane.margin>
                                         </RadioButton>
-                                        <RadioButton fx:id="accountType" mnemonicParsing="false" prefHeight="17.0" prefWidth="128.0" text="College Checking" toggleGroup="$accType" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                        <RadioButton mnemonicParsing="false" prefHeight="17.0" prefWidth="128.0" text="College Checking" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                             <GridPane.margin>
                                                 <Insets bottom="30.0" left="110.0" />
                                             </GridPane.margin>
                                         </RadioButton>
-                                        <RadioButton fx:id="accountType" mnemonicParsing="false" text="Savings" toggleGroup="$accType" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                        <RadioButton mnemonicParsing="false" text="Savings" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                             <GridPane.margin>
                                                 <Insets bottom="-30.0" />
                                             </GridPane.margin>
                                         </RadioButton>
-                                        <RadioButton fx:id="accountType" mnemonicParsing="false" text="Money Market" toggleGroup="$accType" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                        <RadioButton mnemonicParsing="false" text="Money Market" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                             <GridPane.margin>
                                                 <Insets bottom="-30.0" left="110.0" />
                                             </GridPane.margin>
@@ -254,26 +255,35 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                        <VBox layoutX="1.0" layoutY="-3.0" prefHeight="658.0" prefWidth="600.0">
+                        <VBox layoutX="1.0" layoutY="-3.0" prefHeight="212.0" prefWidth="600.0">
                            <children>
                                         <Button mnemonicParsing="false" onAction="#printAccounts" prefHeight="0.0" prefWidth="145.0" text="Print All Accounts">
                                  <VBox.margin>
-                                    <Insets left="220.0" top="100.0" />
+                                    <Insets left="220.0" top="20.0" />
                                  </VBox.margin></Button>
                                         <Button mnemonicParsing="false" onAction="#printAccountsByType" text="Print All Accounts by Account Type">
                                  <VBox.margin>
-                                    <Insets left="190.0" top="100.0" />
+                                    <Insets left="190.0" top="20.0" />
                                  </VBox.margin></Button>
                                         <Button mnemonicParsing="false" onAction="#printAccountsWithFeesAndInterests" prefHeight="25.0" prefWidth="345.0" text="Print All Accounts with Calculated Fees and Monthly Interests">
                                  <VBox.margin>
-                                    <Insets left="120.0" top="100.0" />
+                                    <Insets left="120.0" top="20.0" />
                                  </VBox.margin></Button>
-                                        <Button mnemonicParsing="false" onAction="#calculateFeesAndInterests" text="Apply Calculated Fees and Monthly Interests">
+                                        <Button alignment="CENTER" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#printAccountsWithUpdatedBalances" text="Print All Accounts with Updated Balances from Calculated Fees and Monthly Interests">
                                  <VBox.margin>
-                                    <Insets left="170.0" top="100.0" />
+                                    <Insets left="60.0" top="20.0" />
                                  </VBox.margin></Button>
                            </children>
                         </VBox>
+                        <HBox layoutY="203.0" prefHeight="461.0" prefWidth="600.0">
+                           <children>
+                              <TextArea fx:id="textAreaDisplay3" prefHeight="461.0" prefWidth="579.0">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </TextArea>
+                           </children>
+                        </HBox>
                             </children></AnchorPane>
                     </content>
                 </Tab>

@@ -175,10 +175,8 @@ public class AccountDatabase {
     /**
      Print out accounts within the database in the order that they are currently in.
      */
-    public void print() {
-        for (int i = 0; i < numAcct; i++) {
-            System.out.println(accounts[i].toString());
-        }
+    public String print(Account account) {
+        return account.toString();
     }
 
 
@@ -197,18 +195,15 @@ public class AccountDatabase {
             accounts[minimumIndex] = accounts[i];
             accounts[i] = swapPositions;
         }
-        print();
     }
 
 
     /**
      Print out the accounts within the database and the respective fees and monthly interest accrued for each account.
      */
-    public void printFeeAndInterest() {
+    public String printFeeAndInterest(Account account) {
         DecimalFormat PaddingZeroes = new DecimalFormat("#,##0.00");
-        for (int i = 0; i < numAcct; i++) {
-            System.out.println(accounts[i].toString() + "::fee $" + PaddingZeroes.format(accounts[i].fee())
-                    + "::monthly interest $" + PaddingZeroes.format(accounts[i].monthlyInterest()));
-        }
+        return (account.toString() + "::fee $" + PaddingZeroes.format(account.fee())
+                + "::monthly interest $" + PaddingZeroes.format(account.monthlyInterest()));
     }
 }
