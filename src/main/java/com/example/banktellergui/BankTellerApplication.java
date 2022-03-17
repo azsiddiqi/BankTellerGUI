@@ -12,7 +12,7 @@ public class BankTellerApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(BankTellerApplication.class.getResource("bankteller-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 700);
-        stage.setTitle("Hello!");
+        stage.setTitle("Bank Teller");
         stage.setScene(scene);
         stage.show();
     }

@@ -39,17 +39,17 @@ public class Date implements Comparable<Date> {
 
     /**
      Creates a date object based on a string.
-     @param date string in mm/dd/yyyy format
+     @param date string in yyyy-mm-dd format
      */
     public Date(String date) {
-        String[] separateDate = date.split("/");
+        String[] separateDate = date.split("-");
         int[] convertToInt = new int[NUMBER_OF_DATE_COMPONENTS];
         for (int i = 0; i < convertToInt.length; i++) {
             convertToInt[i] = Integer.parseInt(separateDate[i]);
         }
-        this.year = convertToInt[2];
-        this.month = convertToInt[0];
-        this.day = convertToInt[1];
+        this.year = convertToInt[0];
+        this.month = convertToInt[1];
+        this.day = convertToInt[2];
     }
 
 
