@@ -247,6 +247,10 @@ public class BankTellerController {
 
     @FXML
     void printAccounts(ActionEvent event) {
+        if (allAccts.getNumAcct() == 0) {
+            textAreaDisplay3.appendText("Account Database is empty!\n");
+            return;
+        }
         textAreaDisplay3.appendText("\n*list of accounts in the database*\n");
         for (int i = 0; i < allAccts.getNumAcct(); i++) {
             textAreaDisplay3.appendText(allAccts.print(allAccts.getAccounts()[i]));
@@ -257,6 +261,10 @@ public class BankTellerController {
 
     @FXML
     void printAccountsByType(ActionEvent event) {
+        if (allAccts.getNumAcct() == 0) {
+            textAreaDisplay3.appendText("Account Database is empty!\n");
+            return;
+        }
         allAccts.printByAccountType();
         textAreaDisplay3.appendText("\n*list of accounts by account type.\n");
         for (int i = 0; i < allAccts.getNumAcct(); i++) {
@@ -269,6 +277,10 @@ public class BankTellerController {
 
     @FXML
     void printAccountsWithFeesAndInterests(ActionEvent event) {
+        if (allAccts.getNumAcct() == 0) {
+            textAreaDisplay3.appendText("Account Database is empty!\n");
+            return;
+        }
         textAreaDisplay3.appendText("\n*list of accounts with fee and monthly interest\n");
         for (int i = 0; i < allAccts.getNumAcct(); i++) {
             textAreaDisplay3.appendText(allAccts.printFeeAndInterest(allAccts.getAccounts()[i]));
@@ -279,6 +291,10 @@ public class BankTellerController {
 
     @FXML
     void printAccountsWithUpdatedBalances(ActionEvent event) {
+        if (allAccts.getNumAcct() == 0) {
+            textAreaDisplay3.appendText("Account Database is empty!\n");
+            return;
+        }
         textAreaDisplay3.appendText("\n*list of accounts with updated balance\n");
         for (int i = 0; i < allAccts.getNumAcct(); i++) {
             allAccts.getAccounts()[i].updateBalance();
