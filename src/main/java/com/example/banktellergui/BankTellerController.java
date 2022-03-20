@@ -11,7 +11,7 @@ import javafx.scene.control.ToggleGroup;
 
 public class BankTellerController {
 
-    private static AccountDatabase allAccts = new AccountDatabase();
+    private AccountDatabase allAccts = new AccountDatabase();
 
     @FXML
     private ToggleGroup accountType;
