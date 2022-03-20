@@ -9,6 +9,14 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 
+
+/**
+ This class contains and modifies an AccountDatabase object based on the commands and information obtained from the
+ BankTeller GUI. These commands may request to open an account, which may be done after checking that the inputted
+ information is valid. These commands may also request to close an account, deposit into an account, withdraw from an
+ account, and print all the accounts in various ways.
+ @author Karan Patel, Azaan Siddiqi
+ */
 public class BankTellerController {
 
     private AccountDatabase allAccts = new AccountDatabase();
@@ -58,6 +66,13 @@ public class BankTellerController {
     @FXML
     private TextArea textAreaDisplay3;
 
+
+    /**
+     Finds the account object that is passed into the method in the AccountDatabase object array and returns its index
+     within the array if it exists, or -1 if it doesn't exist.
+     @param account the account object that is being searched for in the AccountDatabase object array.
+     @return the index of the account object in the array if it exists, or -1 if it doesn't exist in the array.
+     */
     private int accountFinder(Account account) {
         for (int i = 0; i < allAccts.getNumAcct(); i++) {
             if (allAccts.getAccounts()[i].equals(account)) {
@@ -67,6 +82,14 @@ public class BankTellerController {
         return AccountDatabase.NOT_FOUND;
     }
 
+
+    /**
+     Checks if there is enough data to deposit or withdraw, if the balance that is being deposited or withdrew is a
+     valid amount, and if the balance is positive.
+     @param depositOrWithdraw a string that contains "Deposit" if we are depositing into an account, or "Withdraw" if
+     we are withdrawing from an account.
+     @return true if the deposited or withdrawn balance is valid, false otherwise.
+     */
     private boolean depositAndWithdrawChecker(String depositOrWithdraw) {
         if (firstName2.getText().isEmpty() || lastName2.getText().isEmpty() || dateOfBirth2.getValue() == null ||
                 accountType2.getSelectedToggle() == null || balanceAmount2.getText().isEmpty()) {
@@ -94,6 +117,14 @@ public class BankTellerController {
         return true;
     }
 
+
+    /**
+     Prints the accounts in the database in one of many ways. It can print either in the order given, by account type,
+     by fees and monthly interests based on the account types, or by first updating the balances based on fees and
+     monthly interests and then printing using the order given.
+     @param printType A string that contains the way we will print the account. It may say "printAllAccs,"
+     "printByAccType," "printWithCalculatedFeesAndInterests," or "printWithUpdatedBalances."
+     */
     private void printDatabase(String printType) {
         if (printType.equals("printWithUpdatedBalances")) {
             for (int i = 0; i < allAccts.getNumAcct(); i++) {
@@ -114,6 +145,17 @@ public class BankTellerController {
         }
     }
 
+
+    /**
+     Checks if an open account of the same type and Profile as the one passed into the method exists in the database.
+     Also checks to see if the account passed into the method is a checking account and a similar college checking
+     account already exists in the database, and vice versa.
+     @param account account object to be compared against the database to see if another matching account already
+     exists.
+     @param accType A RadioButton object whose text displays "Checking," "College Checking," "Savings," or
+     "Money Market."
+     @return true if another matching account already exists, false otherwise.
+     */
     private boolean sameAccountsChecker(Account account, RadioButton accType) {
         for (int i = 0; i < allAccts.getNumAcct(); i++) {
             if (accountFinder(account) != AccountDatabase.NOT_FOUND && allAccts.getAccounts()[accountFinder(account)].closed == false) {
@@ -132,6 +174,15 @@ public class BankTellerController {
         return false;
     }
 
+
+    /**
+     Checks if the information needed to open an account is valid by checking if there is enough data, if the date of
+     birth of the potential account holder is valid, if a valid amount of balance is given, and if the initial deposit
+     is positive.
+     @param accType A RadioButton object whose text displays "Checking", "College Checking", "Savings", or
+     "Money Market."
+     @return true if the information given is valid, false if it is not valid.
+     */
     private boolean validInformationChecker(RadioButton accType) {
         if (firstName.getText().isEmpty() || lastName.getText().isEmpty() || dateOfBirth.getValue() == null ||
                 accType == null || balanceAmount.getText().isEmpty()) {
@@ -164,6 +215,13 @@ public class BankTellerController {
         return true;
     }
 
+
+    /**
+     Deposits money into an account or withdraws money from an account of a specific type in the database as long as
+     the information obtained is valid.
+     @param event An ActionEvent object that occurs when the "Deposit" button or the "Withdraw" button is pressed in
+     the BankTeller GUI.
+     */
     @FXML
     void accountDepositOrWithdraw(ActionEvent event) {
         String depositOrWithdraw = ((Button)event.getSource()).getText();
@@ -202,6 +260,11 @@ public class BankTellerController {
         }
     }
 
+
+    /**
+     Closes an account of a specific type as long as the information obtained is valid.
+     @param event An ActionEvent object that occurs when the "Close" button is pressed in the BankTeller GUI.
+     */
     @FXML
     void closeAccount(ActionEvent event) {
         if (firstName2.getText().isEmpty() || lastName2.getText().isEmpty() || dateOfBirth2.getValue() == null ||
@@ -231,6 +294,11 @@ public class BankTellerController {
         }
     }
 
+
+    /**
+     Opens or reopens an account of a specific type as long as the information obtained is valid.
+     @param event An ActionEvent object that occurs when the "Open" button is pressed in the BankTeller GUI.
+     */
     @FXML
     void openAccount(ActionEvent event) {
         RadioButton accType = (RadioButton) accountType.getSelectedToggle();
@@ -271,6 +339,13 @@ public class BankTellerController {
         }
     }
 
+
+    /**
+     Checks if the number of accounts in the database is 0 or not, and if not, then it calls the printDatabase method
+     to print these account in one of the many ways specified according to the button pressed in the GUI.
+     @param event An ActionEvent object that occurs when one of the four print buttons are pressed in the BankTeller
+     GUI.
+     */
     @FXML
     void printAccounts(ActionEvent event) {
         if (allAccts.getNumAcct() == 0) {
