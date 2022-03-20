@@ -115,9 +115,6 @@ public class AccountDatabase {
      */
     public boolean close(Account account) {
         int removedAcctIndex = find(account);
-        if (removedAcctIndex == NOT_FOUND) {
-            return false;
-        }
         Account closeAccount = accounts[removedAcctIndex];
         closeAccount.closed = true;
         closeAccount.balance = 0;

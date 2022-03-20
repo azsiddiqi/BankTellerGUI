@@ -67,7 +67,16 @@ public class BankTellerController {
         return AccountDatabase.NOT_FOUND;
     }
 
-    private boolean depositAndWithdrawBalanceChecker(ActionEvent event) {
+    private boolean depositAndWithdrawChecker(String depositOrWithdraw) {
+        if (firstName2.getText().isEmpty() || lastName2.getText().isEmpty() || dateOfBirth2.getValue() == null ||
+                accountType2.getSelectedToggle() == null || balanceAmount2.getText().isEmpty()) {
+            if (depositOrWithdraw.equals("Deposit")) {
+                textAreaDisplay2.appendText("Missing data for depositing into an account.\n");
+            } else if (depositOrWithdraw.equals("Withdraw")) {
+                textAreaDisplay2.appendText("Missing data for withdrawing from an account.\n");
+            }
+            return false;
+        }
         double balance = 0;
         try {
             balance = Double.parseDouble(balanceAmount2.getText());
@@ -75,7 +84,6 @@ public class BankTellerController {
             textAreaDisplay2.appendText("Not a valid amount.\n");
             return false;
         }
-        String depositOrWithdraw = ((Button)event.getSource()).getText();
         if (balance <= 0 && depositOrWithdraw.equals("Deposit")) {
             textAreaDisplay2.appendText("Deposit - amount cannot be 0 or negative.\n");
             return false;
@@ -86,8 +94,27 @@ public class BankTellerController {
         return true;
     }
 
-    private boolean sameAccountsChecker(Account account) {
-        RadioButton accType = (RadioButton) accountType.getSelectedToggle();
+    private void printDatabase(String printType) {
+        if (printType.equals("printWithUpdatedBalances")) {
+            for (int i = 0; i < allAccts.getNumAcct(); i++) {
+                allAccts.getAccounts()[i].updateBalance();
+                textAreaDisplay3.appendText(allAccts.print(allAccts.getAccounts()[i]));
+                textAreaDisplay3.appendText("\n");
+            }
+        } else if (printType.equals("printWithCalculatedFeesAndInterests")) {
+            for (int i = 0; i < allAccts.getNumAcct(); i++) {
+                textAreaDisplay3.appendText(allAccts.printFeeAndInterest(allAccts.getAccounts()[i]));
+                textAreaDisplay3.appendText("\n");
+            }
+        } else {
+            for (int i = 0; i < allAccts.getNumAcct(); i++) {
+                textAreaDisplay3.appendText(allAccts.print(allAccts.getAccounts()[i]));
+                textAreaDisplay3.appendText("\n");
+            }
+        }
+    }
+
+    private boolean sameAccountsChecker(Account account, RadioButton accType) {
         for (int i = 0; i < allAccts.getNumAcct(); i++) {
             if (accountFinder(account) != AccountDatabase.NOT_FOUND && allAccts.getAccounts()[accountFinder(account)].closed == false) {
                 textAreaDisplay.appendText(account.holder.toString() + " same account(type) is in the database.\n");
@@ -105,13 +132,12 @@ public class BankTellerController {
         return false;
     }
 
-    private boolean validInformationChecker() {
+    private boolean validInformationChecker(RadioButton accType) {
         if (firstName.getText().isEmpty() || lastName.getText().isEmpty() || dateOfBirth.getValue() == null ||
-                accountType.getSelectedToggle() == null || balanceAmount.getText().isEmpty()) {
+                accType == null || balanceAmount.getText().isEmpty()) {
             textAreaDisplay.appendText("Missing data for opening an account.\n");
             return false;
         }
-        RadioButton accType = (RadioButton) accountType.getSelectedToggle();
         if (accType.getText().equals("College Checking")) {
             if (campusCode.getSelectedToggle() == null) {
                 textAreaDisplay.appendText("Missing data for opening an account.\n");
@@ -140,7 +166,8 @@ public class BankTellerController {
 
     @FXML
     void accountDepositOrWithdraw(ActionEvent event) {
-        if (!(depositAndWithdrawBalanceChecker(event))) {
+        String depositOrWithdraw = ((Button)event.getSource()).getText();
+        if (!(depositAndWithdrawChecker(depositOrWithdraw))) {
             return;
         }
         Profile holder = new Profile(firstName2.getText(), lastName2.getText(), new Date(dateOfBirth2.getValue().toString()));
@@ -163,7 +190,6 @@ public class BankTellerController {
             textAreaDisplay2.appendText(changeBalance.holder + " Money Market is not in the database.\n");
             return;
         }
-        String depositOrWithdraw = ((Button)event.getSource()).getText();
         if (depositOrWithdraw.equals("Deposit")) {
             allAccts.deposit(changeBalance);
             textAreaDisplay2.appendText("Deposit - balance updated.\n");
@@ -207,12 +233,12 @@ public class BankTellerController {
 
     @FXML
     void openAccount(ActionEvent event) {
-        if (!validInformationChecker()) {
+        RadioButton accType = (RadioButton) accountType.getSelectedToggle();
+        if (!validInformationChecker(accType)) {
             return;
         }
         Profile holder = new Profile(firstName.getText(), lastName.getText(), new Date(dateOfBirth.getValue().toString()));
         Account addAccount = null;
-        RadioButton accType = (RadioButton) accountType.getSelectedToggle();
         if (accType.getText().equals("Checking")) {
             addAccount = new Checking(holder, Double.parseDouble(balanceAmount.getText()));
         } else if (accType.getText().equals("College Checking")) {
@@ -235,7 +261,7 @@ public class BankTellerController {
                 testAccount.loyalCustomer = false;
             }
         }
-        if (sameAccountsChecker(addAccount)) {
+        if (sameAccountsChecker(addAccount, accType)) {
             return;
         }
         if (!(allAccts.open(addAccount))) {
@@ -251,57 +277,25 @@ public class BankTellerController {
             textAreaDisplay3.appendText("Account Database is empty!\n");
             return;
         }
-        textAreaDisplay3.appendText("\n*list of accounts in the database*\n");
-        for (int i = 0; i < allAccts.getNumAcct(); i++) {
-            textAreaDisplay3.appendText(allAccts.print(allAccts.getAccounts()[i]));
-            textAreaDisplay3.appendText("\n");
+        String printType = ((Button)event.getSource()).getId();
+        if (printType.equals("printAllAccs")) {
+            textAreaDisplay3.appendText("\n*list of accounts in the database*\n");
+            printDatabase(printType);
+            textAreaDisplay3.appendText("*end of list*\n");
+        } else if (printType.equals("printByAccType")) {
+            allAccts.printByAccountType();
+            textAreaDisplay3.appendText("\n*list of accounts by account type.\n");
+            printDatabase(printType);
+            textAreaDisplay3.appendText("*end of list.\n");
+        } else if (printType.equals("printWithCalculatedFeesAndInterests")) {
+            textAreaDisplay3.appendText("\n*list of accounts with fee and monthly interest\n");
+            printDatabase(printType);
+            textAreaDisplay3.appendText("*end of list.\n");
+        } else if (printType.equals("printWithUpdatedBalances")) {
+            textAreaDisplay3.appendText("\n*list of accounts with updated balance\n");
+            printDatabase(printType);
+            textAreaDisplay3.appendText("*end of list.\n");
         }
-        textAreaDisplay3.appendText("*end of list*\n");
-    }
-
-    @FXML
-    void printAccountsByType(ActionEvent event) {
-        if (allAccts.getNumAcct() == 0) {
-            textAreaDisplay3.appendText("Account Database is empty!\n");
-            return;
-        }
-        allAccts.printByAccountType();
-        textAreaDisplay3.appendText("\n*list of accounts by account type.\n");
-        for (int i = 0; i < allAccts.getNumAcct(); i++) {
-            textAreaDisplay3.appendText(allAccts.print(allAccts.getAccounts()[i]));
-            textAreaDisplay3.appendText("\n");
-        }
-        textAreaDisplay3.appendText("*end of list.\n");
-
-    }
-
-    @FXML
-    void printAccountsWithFeesAndInterests(ActionEvent event) {
-        if (allAccts.getNumAcct() == 0) {
-            textAreaDisplay3.appendText("Account Database is empty!\n");
-            return;
-        }
-        textAreaDisplay3.appendText("\n*list of accounts with fee and monthly interest\n");
-        for (int i = 0; i < allAccts.getNumAcct(); i++) {
-            textAreaDisplay3.appendText(allAccts.printFeeAndInterest(allAccts.getAccounts()[i]));
-            textAreaDisplay3.appendText("\n");
-        }
-        textAreaDisplay3.appendText("*end of list.\n");
-    }
-
-    @FXML
-    void printAccountsWithUpdatedBalances(ActionEvent event) {
-        if (allAccts.getNumAcct() == 0) {
-            textAreaDisplay3.appendText("Account Database is empty!\n");
-            return;
-        }
-        textAreaDisplay3.appendText("\n*list of accounts with updated balance\n");
-        for (int i = 0; i < allAccts.getNumAcct(); i++) {
-            allAccts.getAccounts()[i].updateBalance();
-            textAreaDisplay3.appendText(allAccts.print(allAccts.getAccounts()[i]));
-            textAreaDisplay3.appendText("\n");
-        }
-        textAreaDisplay3.appendText("*end of list.\n");
     }
 
 }
