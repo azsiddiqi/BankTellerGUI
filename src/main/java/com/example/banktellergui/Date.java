@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 
 /**
- This class creates a Date object based off of a string input in the format of mm/dd/yyyy or if not parameterized it
+ This class creates a Date object based off of a string input in the format of yyyy-mm-dd or if not parameterized it
  creates a Date object based on the current date. It also checks to see if the date created is valid and compares the
  Date object to other Date objects. It also can represent the Date object as a string.
  @author Azaan Siddiqi, Karan Patel

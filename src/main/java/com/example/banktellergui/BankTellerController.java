@@ -158,7 +158,8 @@ public class BankTellerController {
      */
     private boolean sameAccountsChecker(Account account, RadioButton accType) {
         for (int i = 0; i < allAccts.getNumAcct(); i++) {
-            if (accountFinder(account) != AccountDatabase.NOT_FOUND && allAccts.getAccounts()[accountFinder(account)].closed == false) {
+            if (accountFinder(account) != AccountDatabase.NOT_FOUND &&
+                    allAccts.getAccounts()[accountFinder(account)].closed == false) {
                 textAreaDisplay.appendText(account.holder.toString() + " same account(type) is in the database.\n");
                 return true;
             }
@@ -223,7 +224,7 @@ public class BankTellerController {
      the BankTeller GUI.
      */
     @FXML
-    void accountDepositOrWithdraw(ActionEvent event) {
+    void depositOrWithdrawAccount(ActionEvent event) {
         String depositOrWithdraw = ((Button)event.getSource()).getText();
         if (!(depositAndWithdrawChecker(depositOrWithdraw))) {
             return;
@@ -272,7 +273,8 @@ public class BankTellerController {
             textAreaDisplay2.appendText("Missing data for closing an account.\n");
             return;
         }
-        Profile holder = new Profile(firstName2.getText(), lastName2.getText(), new Date(dateOfBirth2.getValue().toString()));
+        Profile holder = new Profile(firstName2.getText(), lastName2.getText(),
+                new Date(dateOfBirth2.getValue().toString()));
         Account closeAccount = null;
         RadioButton accType = (RadioButton) accountType2.getSelectedToggle();
         if (accType.getText().equals("Checking")) {

@@ -203,12 +203,12 @@
                                                 <Insets bottom="-30.0" left="110.0" />
                                             </GridPane.margin>
                                         </RadioButton>
-                                        <Button mnemonicParsing="false" onAction="#accountDepositOrWithdraw" text="Deposit" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                        <Button mnemonicParsing="false" onAction="#depositOrWithdrawAccount" text="Deposit" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                             <GridPane.margin>
                                                 <Insets bottom="-40.0" left="90.0" />
                                             </GridPane.margin>
                                         </Button>
-                                        <Button mnemonicParsing="false" onAction="#accountDepositOrWithdraw" text="Withdraw" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                        <Button mnemonicParsing="false" onAction="#depositOrWithdrawAccount" text="Withdraw" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                             <GridPane.margin>
                                                 <Insets bottom="-40.0" left="170.0" />
                                             </GridPane.margin>

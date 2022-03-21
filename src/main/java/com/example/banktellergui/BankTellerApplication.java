@@ -9,7 +9,7 @@ import java.io.IOException;
 
 
 /**
- This class activates the BankTeller GUI through the launch() command in the main method, and by creating an FXMLLoader
+ This class activates the BankTeller GUI by using the launch() command in the main method, and by creating an FXMLLoader
  object and a Scene object in the start method that is displayed to the user through a Stage object.
  @author Karan Patel, Azaan Siddiqi
  */

@@ -38,7 +38,7 @@ public class MoneyMarket extends Savings {
      @return the interest accrued in a month in USD based on money market account rates.
      */
     public double monthlyInterest() {
-        if (this.balance < MONEY_MARKET_WAIVED_THRESHOLD){
+        if (this.balance < MONEY_MARKET_WAIVED_THRESHOLD) {
             loyalCustomer = false;
         }
         if (loyalCustomer == true) {
