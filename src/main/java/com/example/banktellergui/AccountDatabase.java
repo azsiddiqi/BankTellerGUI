@@ -170,17 +170,24 @@ public class AccountDatabase {
 
 
     /**
-     Print out accounts within the database in the order that they are currently in.
+     Returns a string that consists of the information of all accounts within the database in the order that they are
+     currently in.
+     @return A string consisting of the information of all accounts in the database in the given order.
      */
-    public String print(Account account) {
-        return account.toString();
+    public String print() {
+        String result = "";
+        for (int i = 0; i < numAcct; i++) {
+            result = result + accounts[i].toString() + "\n";
+        }
+        return result;
     }
 
 
     /**
-     Print out the accounts in the database ordered by account type.
+     Returns a string that consists of the information of all accounts in the database ordered by account type.
+     @return A string consisting of the information of all accounts in the database ordered by account type.
      */
-    public void printByAccountType() {
+    public String printByAccountType() {
         for (int i = 0; i < numAcct - 1; i++) {
             int minimumIndex = i;
             for (int j = i + 1; j < numAcct; j++) {
@@ -192,15 +199,23 @@ public class AccountDatabase {
             accounts[minimumIndex] = accounts[i];
             accounts[i] = swapPositions;
         }
+        return print();
     }
 
 
     /**
-     Print out the accounts within the database and the respective fees and monthly interest accrued for each account.
+     Returns a string that consists of the information of all accounts within the database and the respective fees and
+     monthly interest accrued for each account.
+     @return A string consisting of the information of all accounts in the database with their fees and monthly
+     interests.
      */
-    public String printFeeAndInterest(Account account) {
+    public String printFeeAndInterest() {
         DecimalFormat PaddingZeroes = new DecimalFormat("#,##0.00");
-        return (account.toString() + "::fee $" + PaddingZeroes.format(account.fee())
-                + "::monthly interest $" + PaddingZeroes.format(account.monthlyInterest()));
+        String result = "";
+        for (int i = 0; i < numAcct; i++) {
+            result = result + accounts[i].toString() + "::fee $" + PaddingZeroes.format(accounts[i].fee())
+                    + "::monthly interest $" + PaddingZeroes.format(accounts[i].monthlyInterest()) + "\n";
+        }
+        return result;
     }
 }

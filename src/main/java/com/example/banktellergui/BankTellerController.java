@@ -119,34 +119,6 @@ public class BankTellerController {
 
 
     /**
-     Prints the accounts in the database in one of many ways. It can print either in the order given, by account type,
-     by fees and monthly interests based on the account types, or by first updating the balances based on fees and
-     monthly interests and then printing using the order given.
-     @param printType A string that contains the way we will print the account. It may say "printAllAccs,"
-     "printByAccType," "printWithCalculatedFeesAndInterests," or "printWithUpdatedBalances."
-     */
-    private void printDatabase(String printType) {
-        if (printType.equals("printWithUpdatedBalances")) {
-            for (int i = 0; i < allAccts.getNumAcct(); i++) {
-                allAccts.getAccounts()[i].updateBalance();
-                textAreaDisplay3.appendText(allAccts.print(allAccts.getAccounts()[i]));
-                textAreaDisplay3.appendText("\n");
-            }
-        } else if (printType.equals("printWithCalculatedFeesAndInterests")) {
-            for (int i = 0; i < allAccts.getNumAcct(); i++) {
-                textAreaDisplay3.appendText(allAccts.printFeeAndInterest(allAccts.getAccounts()[i]));
-                textAreaDisplay3.appendText("\n");
-            }
-        } else {
-            for (int i = 0; i < allAccts.getNumAcct(); i++) {
-                textAreaDisplay3.appendText(allAccts.print(allAccts.getAccounts()[i]));
-                textAreaDisplay3.appendText("\n");
-            }
-        }
-    }
-
-
-    /**
      Checks if an open account of the same type and Profile as the one passed into the method exists in the database.
      Also checks to see if the account passed into the method is a checking account and a similar college checking
      account already exists in the database, and vice versa.
@@ -343,8 +315,10 @@ public class BankTellerController {
 
 
     /**
-     Checks if the number of accounts in the database is 0 or not, and if not, then it calls the printDatabase method
-     to print these account in one of the many ways specified according to the button pressed in the GUI.
+     Checks if the number of accounts in the database is 0 or not, and if not, then it prints the accounts in the
+     database in one of many ways. It can print either in the order given, by account type, by fees and monthly
+     interests based on the account types, or by first updating the balances based on fees and monthly interests and
+     then printing using the order given.
      @param event An ActionEvent object that occurs when one of the four print buttons are pressed in the BankTeller
      GUI.
      */
@@ -357,20 +331,23 @@ public class BankTellerController {
         String printType = ((Button)event.getSource()).getId();
         if (printType.equals("printAllAccs")) {
             textAreaDisplay3.appendText("\n*list of accounts in the database*\n");
-            printDatabase(printType);
+            textAreaDisplay3.appendText(allAccts.print());
             textAreaDisplay3.appendText("*end of list*\n");
         } else if (printType.equals("printByAccType")) {
             allAccts.printByAccountType();
             textAreaDisplay3.appendText("\n*list of accounts by account type.\n");
-            printDatabase(printType);
+            textAreaDisplay3.appendText(allAccts.printByAccountType());
             textAreaDisplay3.appendText("*end of list.\n");
         } else if (printType.equals("printWithCalculatedFeesAndInterests")) {
             textAreaDisplay3.appendText("\n*list of accounts with fee and monthly interest\n");
-            printDatabase(printType);
+            textAreaDisplay3.appendText(allAccts.printFeeAndInterest());
             textAreaDisplay3.appendText("*end of list.\n");
         } else if (printType.equals("printWithUpdatedBalances")) {
+            for (int i = 0; i < allAccts.getNumAcct(); i++) {
+                allAccts.getAccounts()[i].updateBalance();
+            }
             textAreaDisplay3.appendText("\n*list of accounts with updated balance\n");
-            printDatabase(printType);
+            textAreaDisplay3.appendText(allAccts.print());
             textAreaDisplay3.appendText("*end of list.\n");
         }
     }
