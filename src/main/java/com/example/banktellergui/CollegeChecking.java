@@ -51,10 +51,14 @@ public class CollegeChecking extends Checking {
 
     /**
      Calculates the fee needed to be paid in order to maintain a college checking account by using the college checking
-     account balance.
-     @return the fee in USD to keep the college checking account open.
+     account balance. The fee will be 0 if the college checking account is closed.
+     @return the fee in USD to keep the college checking account open, but the fee is 0 if the college checking account
+     is closed.
      */
     public double fee() {
+        if (closed == true){
+            return 0;
+        }
         return COLLEGE_CHECKING_FEE;
     } //return the monthly fee
 

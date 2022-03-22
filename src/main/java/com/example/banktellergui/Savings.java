@@ -53,9 +53,13 @@ public class Savings extends Account {
 
     /**
      Calculates the fee needed to be paid in order to maintain a savings account by using the savings account balance.
-     @return the fee in USD to keep the savings account open.
+     The fee will be 0 if the savings account is closed.
+     @return the fee in USD to keep the savings account open, but the fee is 0 if the savings account is closed.
      */
     public double fee() {
+        if (closed == true){
+            return 0;
+        }
         if (balance >= SAVINGS_FEE_WAIVED_THRESHOLD) {
             return SAVINGS_FEE_IF_BALANCE_ABOVE_THREE_HUNDRED;
         }

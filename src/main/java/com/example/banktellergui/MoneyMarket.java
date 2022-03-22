@@ -50,10 +50,14 @@ public class MoneyMarket extends Savings {
 
     /**
      Calculates the fee needed to be paid in order to maintain a money market account by using the money market account
-     balance.
-     @return the fee in USD to keep the money market account open.
+     balance. The fee will be 0 if the money market account is closed.
+     @return the fee in USD to keep the money market account open, but the fee is 0 if the money market account is
+     closed.
      */
     public double fee() {
+        if (closed == true){
+            return 0;
+        }
         if (balance >= MONEY_MARKET_WAIVED_THRESHOLD && this.numberOfWithdrawl <= MONEY_MARKET_WITHDRAW_THRESHOLD) {
             return MONEY_MARKET_FEE_THRESHOLD_MET;
         }

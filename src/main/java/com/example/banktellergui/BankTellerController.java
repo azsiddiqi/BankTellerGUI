@@ -66,6 +66,15 @@ public class BankTellerController {
     @FXML
     private TextArea textAreaDisplay3;
 
+    @FXML
+    private RadioButton newBrunswick;
+
+    @FXML
+    private RadioButton newark;
+
+    @FXML
+    private RadioButton camden;
+
 
     /**
      Finds the account object that is passed into the method in the AccountDatabase object array and returns its index
@@ -230,6 +239,33 @@ public class BankTellerController {
                 return;
             }
             textAreaDisplay2.appendText("Withdraw - balance updated.\n");
+        }
+    }
+
+
+    /**
+     Enables the New Brunswick, Newark, and Camden RadioButtons if the College Checking RadioButton is selected. Also,
+     it enables the Loyal Customer RadioButton if the Savings RadioButton is selected. Otherwise, the New Brunswick,
+     Newark, Camden, and Loyal Customer RadioButtons are disabled.
+     @param event An ActionEvent object that occurs when the "Checking," "College Checking," "Savings," or
+     "Money Market" buttons are pressed in the BankTeller GUI.
+     */
+    @FXML
+    void collegeCheckingOrSavingsSelected(ActionEvent event) {
+        RadioButton accType = (RadioButton) accountType.getSelectedToggle();
+        if (accType.getText().equals("College Checking")) {
+            newBrunswick.setDisable(false);
+            newark.setDisable(false);
+            camden.setDisable(false);
+        } else {
+            newBrunswick.setDisable(true);
+            newark.setDisable(true);
+            camden.setDisable(true);
+        }
+        if (accType.getText().equals("Savings")) {
+            loyalCustomer.setDisable(false);
+        } else {
+            loyalCustomer.setDisable(true);
         }
     }
 

@@ -37,9 +37,13 @@ public class Checking extends Account {
 
     /**
      Calculates the fee needed to be paid in order to maintain a checking account by using the checking account balance.
-     @return the fee in USD to keep the checking account open.
+     The fee will be 0 if the checking account is closed.
+     @return the fee in USD to keep the checking account open, but the fee is 0 if the checking account is closed.
      */
     public double fee() {
+        if (closed == true){
+            return 0;
+        }
         if (balance >= CHECKING_FEE_WAIVED_THRESHOLD) {
             return CHECKING_FEE_IF_BALANCE_ABOVE_ONE_THOUSAND;//
         }
