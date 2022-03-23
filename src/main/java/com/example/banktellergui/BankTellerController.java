@@ -216,12 +216,19 @@ public class BankTellerController {
         } else if (accType.getText().equals("Money Market")) {
             changeBalance = new MoneyMarket(holder, Double.parseDouble(balanceAmount2.getText()));
         }
-        int findMatchingAccountIndex = accountFinder(changeBalance);
-        if (findMatchingAccountIndex == AccountDatabase.NOT_FOUND && !(accType.getText().equals("Money Market"))) {
+        if (accountFinder(changeBalance) == AccountDatabase.NOT_FOUND && !(accType.getText().equals("Money Market"))) {
             textAreaDisplay.appendText(changeBalance.holder + " " + changeBalance.getType() + " is not in the database.\n");
             return;
-        } else if (findMatchingAccountIndex == AccountDatabase.NOT_FOUND && (accType.getText().equals("Money Market"))) {
+        } else if (accountFinder(changeBalance) == AccountDatabase.NOT_FOUND && (accType.getText().equals("Money Market"))) {
             textAreaDisplay.appendText(changeBalance.holder + " Money Market is not in the database.\n");
+            return;
+        }
+        if (allAccts.getAccounts()[accountFinder(changeBalance)].closed == true) {
+            if (depositOrWithdraw.equals("Deposit")) {
+                textAreaDisplay.appendText("Cannot Deposit into a closed account.\n");
+            } else if (depositOrWithdraw.equals("Withdraw")) {
+                textAreaDisplay.appendText("Cannot Withdraw from a closed account.\n");
+            }
             return;
         }
         if (depositOrWithdraw.equals("Deposit")) {
