@@ -34,7 +34,7 @@ public class BankTellerMain extends Application {
 
     /**
      Calls the launch() method which begins the BankTeller GUI application.
-     * @param args Array to store the java command line arguments.
+     @param args Array to store the java command line arguments.
      */
     public static void main(String[] args) {
         launch();
