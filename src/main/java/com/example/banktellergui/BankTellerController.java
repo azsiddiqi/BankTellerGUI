@@ -245,7 +245,7 @@ public class BankTellerController {
      "Money Market" buttons are pressed in the BankTeller GUI.
      */
     @FXML
-    void collegeCheckingOrSavingsSelected(ActionEvent event) {
+    void selectedCollegeCheckingOrSavings(ActionEvent event) {
         RadioButton accType = (RadioButton) accountType.getSelectedToggle();
         if (accType.getText().equals("College Checking")) {
             newBrunswick.setDisable(false);
@@ -309,13 +309,15 @@ public class BankTellerController {
         if (!validInformationChecker(accType)) {
             return;
         }
-        Profile holder = new Profile(firstName.getText(), lastName.getText(), new Date(dateOfBirth.getValue().toString()));
+        Profile holder = new Profile(firstName.getText(), lastName.getText(),
+                new Date(dateOfBirth.getValue().toString()));
         Account addAccount = null;
         if (accType.getText().equals("Checking")) {
             addAccount = new Checking(holder, Double.parseDouble(balanceAmount.getText()));
         } else if (accType.getText().equals("College Checking")) {
             RadioButton campCode = (RadioButton) campusCode.getSelectedToggle();
-            addAccount = new CollegeChecking(holder, Double.parseDouble(balanceAmount.getText()), Integer.parseInt(campCode.getId()));
+            addAccount = new CollegeChecking(holder, Double.parseDouble(balanceAmount.getText()),
+                    Integer.parseInt(campCode.getId()));
         } else if (accType.getText().equals("Savings")) {
             if (loyalCustomer.isSelected()) {
                 addAccount = new Savings(holder, Double.parseDouble(balanceAmount.getText()), 1);

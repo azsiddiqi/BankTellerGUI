@@ -56,7 +56,7 @@ public class CollegeChecking extends Checking {
      is closed.
      */
     public double fee() {
-        if (closed == true){
+        if (closed == true) {
             return 0;
         }
         return COLLEGE_CHECKING_FEE;

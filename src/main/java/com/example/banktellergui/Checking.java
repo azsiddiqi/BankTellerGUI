@@ -4,7 +4,8 @@ package com.example.banktellergui;
 /**
  This class is a subclass of the Account class, thus extending all of its methods and applies conditions specific to a
  Checking account. It has a constructor based off of a Profile object and an account balance. Along with this it has
- monthlyInterest, fee, and getType methods defined with proper values in respect to the guidelines of a checking account.
+ monthlyInterest, fee, and getType methods defined with proper values in respect to the guidelines of a checking
+ account.
  @author Azaan Siddiqi, Karan Patel
  */
 public class Checking extends Account {
@@ -41,7 +42,7 @@ public class Checking extends Account {
      @return the fee in USD to keep the checking account open, but the fee is 0 if the checking account is closed.
      */
     public double fee() {
-        if (closed == true){
+        if (closed == true) {
             return 0;
         }
         if (balance >= CHECKING_FEE_WAIVED_THRESHOLD) {

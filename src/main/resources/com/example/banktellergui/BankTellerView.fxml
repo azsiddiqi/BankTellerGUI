@@ -66,7 +66,7 @@
                                                 <Insets left="70.0" />
                                             </GridPane.margin>
                                         </Label>
-                                        <RadioButton mnemonicParsing="false" onAction="#collegeCheckingOrSavingsSelected" text="Checking" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                        <RadioButton mnemonicParsing="false" onAction="#selectedCollegeCheckingOrSavings" text="Checking" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                             <GridPane.margin>
                                                 <Insets bottom="30.0" />
                                             </GridPane.margin>
@@ -74,17 +74,17 @@
                                     <ToggleGroup fx:id="accountType" />
                                  </toggleGroup>
                                         </RadioButton>
-                                        <RadioButton mnemonicParsing="false" onAction="#collegeCheckingOrSavingsSelected" prefHeight="17.0" prefWidth="128.0" text="College Checking" toggleGroup="$accountType" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                        <RadioButton mnemonicParsing="false" onAction="#selectedCollegeCheckingOrSavings" prefHeight="17.0" prefWidth="128.0" text="College Checking" toggleGroup="$accountType" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                             <GridPane.margin>
                                                 <Insets bottom="30.0" left="110.0" />
                                             </GridPane.margin>
                                         </RadioButton>
-                                        <RadioButton mnemonicParsing="false" onAction="#collegeCheckingOrSavingsSelected" text="Savings" toggleGroup="$accountType" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                        <RadioButton mnemonicParsing="false" onAction="#selectedCollegeCheckingOrSavings" text="Savings" toggleGroup="$accountType" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                             <GridPane.margin>
                                                 <Insets bottom="-30.0" />
                                             </GridPane.margin>
                                         </RadioButton>
-                                        <RadioButton mnemonicParsing="false" onAction="#collegeCheckingOrSavingsSelected" text="Money Market" toggleGroup="$accountType" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                        <RadioButton mnemonicParsing="false" onAction="#selectedCollegeCheckingOrSavings" text="Money Market" toggleGroup="$accountType" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                             <GridPane.margin>
                                                 <Insets bottom="-30.0" left="110.0" />
                                             </GridPane.margin>

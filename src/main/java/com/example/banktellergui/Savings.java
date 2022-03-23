@@ -57,7 +57,7 @@ public class Savings extends Account {
      @return the fee in USD to keep the savings account open, but the fee is 0 if the savings account is closed.
      */
     public double fee() {
-        if (closed == true){
+        if (closed == true) {
             return 0;
         }
         if (balance >= SAVINGS_FEE_WAIVED_THRESHOLD) {

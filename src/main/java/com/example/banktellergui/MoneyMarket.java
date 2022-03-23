@@ -55,7 +55,7 @@ public class MoneyMarket extends Savings {
      closed.
      */
     public double fee() {
-        if (closed == true){
+        if (closed == true) {
             return 0;
         }
         if (balance >= MONEY_MARKET_WAIVED_THRESHOLD && this.numberOfWithdrawl <= MONEY_MARKET_WITHDRAW_THRESHOLD) {
