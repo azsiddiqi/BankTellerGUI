@@ -13,7 +13,7 @@ import java.io.IOException;
  object and a Scene object in the start method that is displayed to the user through a Stage object.
  @author Karan Patel, Azaan Siddiqi
  */
-public class BankTellerApplication extends Application {
+public class BankTellerMain extends Application {
 
 
     /**
@@ -24,7 +24,7 @@ public class BankTellerApplication extends Application {
      */
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(BankTellerApplication.class.getResource("BankTellerView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(BankTellerMain.class.getResource("BankTellerView.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 800);
         stage.setTitle("Bank Teller");
         stage.setScene(scene);
