@@ -61,12 +61,6 @@ public class BankTellerController {
     private TextArea textAreaDisplay;
 
     @FXML
-    private TextArea textAreaDisplay2;
-
-    @FXML
-    private TextArea textAreaDisplay3;
-
-    @FXML
     private RadioButton newBrunswick;
 
     @FXML
@@ -103,9 +97,9 @@ public class BankTellerController {
         if (firstName2.getText().isEmpty() || lastName2.getText().isEmpty() || dateOfBirth2.getValue() == null ||
                 accountType2.getSelectedToggle() == null || balanceAmount2.getText().isEmpty()) {
             if (depositOrWithdraw.equals("Deposit")) {
-                textAreaDisplay2.appendText("Missing data for depositing into an account.\n");
+                textAreaDisplay.appendText("Missing data for depositing into an account.\n");
             } else if (depositOrWithdraw.equals("Withdraw")) {
-                textAreaDisplay2.appendText("Missing data for withdrawing from an account.\n");
+                textAreaDisplay.appendText("Missing data for withdrawing from an account.\n");
             }
             return false;
         }
@@ -113,14 +107,14 @@ public class BankTellerController {
         try {
             balance = Double.parseDouble(balanceAmount2.getText());
         } catch (NumberFormatException invalidBalance) {
-            textAreaDisplay2.appendText("Not a valid amount.\n");
+            textAreaDisplay.appendText("Not a valid amount.\n");
             return false;
         }
         if (balance <= 0 && depositOrWithdraw.equals("Deposit")) {
-            textAreaDisplay2.appendText("Deposit - amount cannot be 0 or negative.\n");
+            textAreaDisplay.appendText("Deposit - amount cannot be 0 or negative.\n");
             return false;
         } else if (balance <= 0 && depositOrWithdraw.equals("Withdraw")) {
-            textAreaDisplay2.appendText("Withdraw - amount cannot be 0 or negative.\n");
+            textAreaDisplay.appendText("Withdraw - amount cannot be 0 or negative.\n");
             return false;
         }
         return true;
@@ -224,21 +218,21 @@ public class BankTellerController {
         }
         int findMatchingAccountIndex = accountFinder(changeBalance);
         if (findMatchingAccountIndex == AccountDatabase.NOT_FOUND && !(accType.getText().equals("Money Market"))) {
-            textAreaDisplay2.appendText(changeBalance.holder + " " + changeBalance.getType() + " is not in the database.\n");
+            textAreaDisplay.appendText(changeBalance.holder + " " + changeBalance.getType() + " is not in the database.\n");
             return;
         } else if (findMatchingAccountIndex == AccountDatabase.NOT_FOUND && (accType.getText().equals("Money Market"))) {
-            textAreaDisplay2.appendText(changeBalance.holder + " Money Market is not in the database.\n");
+            textAreaDisplay.appendText(changeBalance.holder + " Money Market is not in the database.\n");
             return;
         }
         if (depositOrWithdraw.equals("Deposit")) {
             allAccts.deposit(changeBalance);
-            textAreaDisplay2.appendText("Deposit - balance updated.\n");
+            textAreaDisplay.appendText("Deposit - balance updated.\n");
         } else if (depositOrWithdraw.equals("Withdraw")) {
             if (!(allAccts.withdraw(changeBalance))) {
-                textAreaDisplay2.appendText("Withdraw - insufficient fund.\n");
+                textAreaDisplay.appendText("Withdraw - insufficient fund.\n");
                 return;
             }
-            textAreaDisplay2.appendText("Withdraw - balance updated.\n");
+            textAreaDisplay.appendText("Withdraw - balance updated.\n");
         }
     }
 
@@ -278,7 +272,7 @@ public class BankTellerController {
     void closeAccount(ActionEvent event) {
         if (firstName2.getText().isEmpty() || lastName2.getText().isEmpty() || dateOfBirth2.getValue() == null ||
                 accountType2.getSelectedToggle() == null) {
-            textAreaDisplay2.appendText("Missing data for closing an account.\n");
+            textAreaDisplay.appendText("Missing data for closing an account.\n");
             return;
         }
         Profile holder = new Profile(firstName2.getText(), lastName2.getText(),
@@ -295,12 +289,12 @@ public class BankTellerController {
             closeAccount = new MoneyMarket(holder, 0);
         }
         if (accountFinder(closeAccount) == AccountDatabase.NOT_FOUND) {
-            textAreaDisplay2.appendText("Cannot close an account that is not in the database.\n");
+            textAreaDisplay.appendText("Cannot close an account that is not in the database.\n");
         } else if (allAccts.getAccounts()[accountFinder(closeAccount)].closed == true) {
-            textAreaDisplay2.appendText("Account is closed already.\n");
+            textAreaDisplay.appendText("Account is closed already.\n");
         } else {
             allAccts.close(closeAccount);
-            textAreaDisplay2.appendText("Account closed.\n");
+            textAreaDisplay.appendText("Account closed.\n");
         }
     }
 
@@ -331,12 +325,9 @@ public class BankTellerController {
         } else if (accType.getText().equals("Money Market")) {
             addAccount = new MoneyMarket(holder, Double.parseDouble(balanceAmount.getText()));
             MoneyMarket testAccount = (MoneyMarket) addAccount;
-            if (testAccount.balance < MoneyMarket.MONEY_MARKET_WAIVED_THRESHOLD && accountFinder(testAccount) == AccountDatabase.NOT_FOUND) {
+            if (testAccount.balance < MoneyMarket.MONEY_MARKET_WAIVED_THRESHOLD) {
                 textAreaDisplay.appendText("Minimum of $2500 to open a MoneyMarket account.\n");
                 return;
-            }
-            if (testAccount.balance < MoneyMarket.MONEY_MARKET_WAIVED_THRESHOLD) {
-                testAccount.loyalCustomer = false;
             }
         }
         if (sameAccountsChecker(addAccount, accType)) {
@@ -361,30 +352,30 @@ public class BankTellerController {
     @FXML
     void printAccounts(ActionEvent event) {
         if (allAccts.getNumAcct() == 0) {
-            textAreaDisplay3.appendText("Account Database is empty!\n");
+            textAreaDisplay.appendText("Account Database is empty!\n");
             return;
         }
         String printType = ((Button)event.getSource()).getId();
         if (printType.equals("printAllAccs")) {
-            textAreaDisplay3.appendText("\n*list of accounts in the database*\n");
-            textAreaDisplay3.appendText(allAccts.print());
-            textAreaDisplay3.appendText("*end of list*\n");
+            textAreaDisplay.appendText("\n*list of accounts in the database*\n");
+            textAreaDisplay.appendText(allAccts.print());
+            textAreaDisplay.appendText("*end of list*\n\n");
         } else if (printType.equals("printByAccType")) {
             allAccts.printByAccountType();
-            textAreaDisplay3.appendText("\n*list of accounts by account type.\n");
-            textAreaDisplay3.appendText(allAccts.printByAccountType());
-            textAreaDisplay3.appendText("*end of list.\n");
+            textAreaDisplay.appendText("\n*list of accounts by account type.\n");
+            textAreaDisplay.appendText(allAccts.printByAccountType());
+            textAreaDisplay.appendText("*end of list.\n\n");
         } else if (printType.equals("printWithCalculatedFeesAndInterests")) {
-            textAreaDisplay3.appendText("\n*list of accounts with fee and monthly interest\n");
-            textAreaDisplay3.appendText(allAccts.printFeeAndInterest());
-            textAreaDisplay3.appendText("*end of list.\n");
+            textAreaDisplay.appendText("\n*list of accounts with fee and monthly interest\n");
+            textAreaDisplay.appendText(allAccts.printFeeAndInterest());
+            textAreaDisplay.appendText("*end of list.\n\n");
         } else if (printType.equals("printWithUpdatedBalances")) {
             for (int i = 0; i < allAccts.getNumAcct(); i++) {
                 allAccts.getAccounts()[i].updateBalance();
             }
-            textAreaDisplay3.appendText("\n*list of accounts with updated balance\n");
-            textAreaDisplay3.appendText(allAccts.print());
-            textAreaDisplay3.appendText("*end of list.\n");
+            textAreaDisplay.appendText("\n*list of accounts with updated balance\n");
+            textAreaDisplay.appendText(allAccts.print());
+            textAreaDisplay.appendText("*end of list.\n\n");
         }
     }
 
