@@ -263,9 +263,9 @@
         </TabPane>
     </top>
    <right>
-      <HBox prefHeight="366.0" prefWidth="585.0" BorderPane.alignment="CENTER">
+      <HBox prefHeight="366.0" prefWidth="582.0" BorderPane.alignment="CENTER">
          <children>
-                      <TextArea fx:id="textAreaDisplay" prefHeight="366.0" prefWidth="565.0" HBox.hgrow="ALWAYS">
+                      <TextArea fx:id="textAreaDisplay" prefHeight="366.0" prefWidth="581.0" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin></TextArea>
